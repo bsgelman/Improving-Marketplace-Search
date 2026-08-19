@@ -43,6 +43,33 @@ ones. Tracked with hits@10 and MRR on a held-out split.
 Index the learned product embeddings in FAISS and run live queries, rendering
 results with thumbnails, average rating and store name.
 
+## Results
+
+Retrieval quality on the held-out split, at the best epoch of each run. Every model
+starts near chance and climbs, so the encoders are learning something real about
+query/product alignment:
+
+| Category | Val products | hits@10 (start to best) | best MRR | Epochs |
+|---|:-:|:-:|:-:|:-:|
+| Beauty Products | 68 | 0.22 → **0.85** | 0.444 | 44 |
+| Pet Supplies | 65 | 0.15 → **0.74** | 0.354 | 47 |
+| Home Products | 59 | 0.17 → **0.73** | 0.330 | 50 |
+| CDs & Vinyl | 56 | 0.20 → **0.50** | 0.224 | 66 |
+| Appliances | 50 | 0.20 → **0.50** | 0.214 | 24 |
+
+Read these as directional, not as benchmark numbers. Three caveats worth stating:
+
+- The validation sets are 50 to 68 products. Small enough that a few products
+  moving in or out of the top 10 swings hits@10 by several points.
+- The same split drives early stopping, so best-epoch figures are optimistic.
+- Queries are LLM-generated, so this measures retrieval against *plausible*
+  customer phrasing, not against how people actually search.
+
+Appliances and CDs/vinyl lag the rest. Appliances stopped early at 24 epochs and
+was still improving; CDs and vinyl ran the longest and plateaued at 0.50, which
+fits a catalogue where titles are artist and album names rather than descriptive
+text the encoder can latch onto.
+
 ## Category coverage
 
 Not every category made it through every stage.
