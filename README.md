@@ -1,7 +1,6 @@
 # Improving Marketplace Search
 
-Semantic product search for e-commerce, built by a student project team at
-UCLA, Winter 2025.
+Semantic product search for e-commerce, Winter 2025.
 
 Keyword search fails when a shopper and a product listing use different words for
 the same thing. The fix here is a **dual encoder**: one transformer embeds the
