@@ -87,11 +87,31 @@ Not every category made it through every stage.
 | Musical Instruments | ✅ | — | — | — | — |
 | Tools & Home Improvement | ✅ | — | — | — | — |
 
+## Repository layout
+
+Folders are the five pipeline stages above, in order.
+
+```
+1_filtering/          stage 1, one notebook per category      (10)
+2_clustering/         stage 2                                  (7)
+3_generate_queries/   stage 3                                  (6)
+4_dual_encoder/       stage 4                                  (5)
+5_search/             stage 5                                  (4)
+data/                 the one sample file that is committed
+```
+
 ## Running the notebooks
 
-- Notebooks read and write a local `data/` directory that is not committed. Start by
+- Notebooks expect a local `data/` directory that is mostly not committed. Start by
   downloading the category metadata you want from the Amazon Reviews 2023 dataset.
+  The one file committed is `data/cd_vinyl_products_with_sample_queries.csv`, a 276-row
+  sample of stage 3 output, so it is possible to see the shape of the training data
+  without regenerating it.
+- **Load paths are not uniform.** These notebooks were written one category at a time
+  across a quarter, and they variously read from `data/`, from the working directory,
+  and from absolute local paths. Expect to set the input path at the top of whichever
+  notebook you open. Nothing downstream of that cell depends on it.
 - Stage 3 needs `OPENAI_API_KEY` in your environment.
 - Stage 4 expects a GPU.
-- `product_filtering_template.ipynb` is the blank starting point for adding a new
-  category.
+- `1_filtering/product_filtering_template.ipynb` is the blank starting point for adding
+  a new category.
